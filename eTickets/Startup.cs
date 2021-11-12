@@ -1,6 +1,9 @@
+using eTickets.Data;
+using eTickets.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,9 +23,23 @@ namespace eTickets
 
         public IConfiguration Configuration { get; }
 
+        //There are basically two types of services in ASP.NET Core: Framework Services:
+        //Services which are a part of ASP.NET Core framework such as IApplicationBuilder, IHostingEnvironment, ILoggerFactory etc.
+        //Application Services: The services (custom types or classes) which you as a programmer create for your application.
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // DbContext configuration
+
+            
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+
+
+            //Services Configuration
+            services.AddScoped<IEntityBaseRepository, ActorsService>();
+            services.AddScoped<IProducerService, ProducersService>();
+
             services.AddControllersWithViews();
         }
 
@@ -52,6 +69,9 @@ namespace eTickets
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Seed database
+            AppDbInitializer.Seed(app);
         }
     }
 }
