@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eTickets.Models
 {
-    public class Actor : IEntityBaseRepository
+    public class Actor : IEntityBase
     {
         [Key]
         public int Id { get; set; }

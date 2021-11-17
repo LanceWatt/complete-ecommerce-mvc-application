@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace eTickets.Data.Base
 {
-    public interface IEntityBaseRepository
+    public interface IEntityBase
     {
         int Id { get; set; }
     }

@@ -1,6 +1,9 @@
 ﻿using eTickets.Data;
+using eTickets.Data.Base;
 using eTickets.Data.Services;
+using eTickets.Data.Static;
 using eTickets.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,15 +12,19 @@ using System.Threading.Tasks;
 
 namespace eTickets.Controllers
 {
+    // Only the authorized users that have admin role are going to access the functionality within this controller
+    [Authorize(Roles = UserRoles.Admin)]
     public class ActorsController : Controller
     {
-        private readonly IEntityBaseRepository _service;
+        
+        private readonly IActorsService _service;
 
-        public ActorsController(IEntityBaseRepository service)
+        public ActorsController(IActorsService service)
         {
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var actors = await _service.GetAllAsync();

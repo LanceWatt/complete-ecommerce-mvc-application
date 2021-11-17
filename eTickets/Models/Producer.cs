@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace eTickets.Models
 {
-    public class Producer : IEntityBaseRepository
+    public class Producer : IEntityBase
     {
 
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Profile Picture")]
+        [Display(Name = "ProfilePicture")]
         public string ProfilePictureUrl { get; set; }
 
-        [Display(Name = "Full Name")]
+        [Display(Name = "FullName")]
         public string FullName { get; set; }
 
         [Display(Name = "Biography")]
